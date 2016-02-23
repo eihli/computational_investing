@@ -27,17 +27,18 @@ class Simulate(unittest.TestCase):
         print sharpe_ratio
         self.assertAlmostEqual(sharpe_ratio, 21.5, 2)
 
-#   def test_get_stocks_dataframe(self):
-#      ls_symbols = ["AAPL", "GOOG"]
-#      df = sim.get_stocks_dataframe("2006/01/01", "2006/01/05", ls_symbols)
+    def test_calc_cum_return(self):
+        returns = [.009, -.007, .008]
+        cum_return = sim.calc_cum_return(returns)
+        self.assertAlmostEqual(cum_return, 0.009952, 6)
 
     def test_run(self):
         dt_start = dt.datetime(2011, 01, 01)
-        dt_end = dt.datetime(2011, 12, 31)
+        dt_end = dt.datetime(2011, 01, 8)
         ls_symbols = ['AAPL', 'GLD', 'GOOG', 'XOM']
         alloc = [0.4, 0.4, 0.0, 0.2]
-        sharpe, vol, avg_daily_ret, cum_ret = sim.run(dt_start, dt_end, ls_symbols, alloc)
-        self.assertAlmostEqual(sharpe, 1.028, 3)
-        self.assertAlmostEqual(vol, 0.01014, 5)
-        self.assertAlmostEqual(avg_daily_ret, 0.000657)
-        self.assertAlmostEqual(cum_ret, 1.16487, 5)
+        vol, avg_daily_ret, sharpe, cum_ret = sim.run(dt_start, dt_end, ls_symbols, alloc)
+        self.assertAlmostEqual(sharpe, -2.1709, 3)
+        self.assertAlmostEqual(vol, 0.00327, 5)
+        self.assertAlmostEqual(avg_daily_ret, -0.000448657, 9)
+        self.assertAlmostEqual(cum_ret, -0.00226798, 8)
